@@ -1,0 +1,19 @@
+{
+  "name": "botkit-jira",
+  "version": "1.0.0",
+  "description": "A tiny framework to verify a Slack user against JIRA.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "botkit",
+    "jira"
+  ],
+  "author": "Paul-Valentin Mini",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lru-cache": "^4.1.2",
+    "monk": "^6.0.5"
+  }
+}

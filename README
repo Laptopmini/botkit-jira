@@ -1,0 +1,15 @@
+# botkit-jira
+
+Required Env Variables
+
+JIRA:
+JIRA_HOST=<jira_domain>
+JIRA_USER=<jira_user_email>
+JIRA_KEY=<jira_api_key>
+
+MONGODB:
+JIRA_MONGO_DB=<mongo_db_name>
+JIRA_MONGO_HOST=<mongo_hostname>
+JIRA_MONGO_PORT=<mongo_port>
+JIRA_MONGO_USERNAME=<mongo_user>
+JIRA_MONGO_PASSWORD=<mongo_password>
