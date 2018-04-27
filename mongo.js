@@ -2,12 +2,6 @@ const LRU = require('lru-cache');
 
 const table = process.env.JIRA_MONGO_TABLE !== undefined ? process.env.JIRA_MONGO_TABLE : 'ledger';
 
-function checkLedger() {
-    if (_ledger === undefined) {
-        throw new Error("Ledger needs to be pulled at least once before getting values from it.");
-    }
-}
-
 function getUri() {
     if (process.env.JIRA_MONGO_USERNAME === undefined 
         || process.env.JIRA_MONGO_PASSWORD === undefined 

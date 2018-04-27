@@ -49,6 +49,11 @@ async function isUserTeamMember(bot, slackUserId) {
     });
 }
 
+async function addEmailToUserLedger(slackEmail, jiraEmail) {
+    return mongo.addLedgerValue(slackEmail, jiraEmail);
+}
+
 module.exports = {
-    isUserTeamMember
+    isUserTeamMember,
+    addEmailToUserLedger
 }
