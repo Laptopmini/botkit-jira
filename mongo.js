@@ -1,4 +1,5 @@
 const LRU = require('lru-cache');
+const monk = require('monk');
 
 const table = process.env.JIRA_MONGO_TABLE !== undefined ? process.env.JIRA_MONGO_TABLE : 'ledger';
 
