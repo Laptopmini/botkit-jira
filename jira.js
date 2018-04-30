@@ -1,16 +1,5 @@
 const utils = require('./utils');
 
-const _teams = new Set([
-    'DEVOPS',
-    'ALPHA',
-    'LAMBDA',
-    'MECHA',
-    'NOVA',
-    'OMEGA',
-    'DEVOPS',
-    'DEVEXP'
-]);
-
 async function getUser(key) {
     return new Promise((resolve, reject) => {
         const path = "/rest/api/2/user/search";
@@ -44,7 +33,7 @@ async function isUserTeamMember(username) {
                 const groups = response.groups.items;
                 for (var key in groups) {
                     const name = groups[key].name;
-                    if (name !== undefined && _teams.has(name)) {
+                    if (name !== undefined && name == "Team All") {
                         resolve(true);
                         return;
                     }
