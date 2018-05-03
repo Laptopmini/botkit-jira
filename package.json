@@ -1,6 +1,6 @@
 {
   "name": "botkit-jira",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A tiny framework to verify a Slack user against JIRA.",
   "main": "index.js",
   "scripts": {

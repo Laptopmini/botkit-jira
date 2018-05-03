@@ -38,6 +38,10 @@ async function isUserTeamMember(bot, slackUserId) {
                 mongo.getLedgerValue(email).then((jiraEmail) => {
                     completion(jiraEmail);
                 }).catch((error) => {
+                    if (error instanceof mongo.EmailNotInLedgerError) {
+                        completion(email);
+                        return;
+                    }
                     reject(error);
                 });
             } else {

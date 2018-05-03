@@ -3,6 +3,13 @@ const monk = require('monk');
 
 const table = process.env.JIRA_MONGO_TABLE !== undefined ? process.env.JIRA_MONGO_TABLE : 'ledger';
 
+class EmailNotInLedgerError extends Error {
+    constructor() {
+        super();
+        this.message = 'Email not in ledger';
+    }
+}
+
 function getUri() {
     if (process.env.JIRA_MONGO_USERNAME === undefined 
         || process.env.JIRA_MONGO_PASSWORD === undefined 
@@ -27,6 +34,10 @@ async function getLedgerValue(slackEmail) {
         collection.findOne({
             slack: slackEmail
         }).then((item) => {
+            if (item === null) {
+                reject(new EmailNotInLedgerError());
+                return;
+            }
             resolve(item.jira);
         }).catch((error) => {
             reject(error);
@@ -58,6 +69,7 @@ async function addLedgerValue(slackEmail, jiraEmail) {
 }
 
 module.exports = {
+    EmailNotInLedgerError,
     getLedgerValue,
     addLedgerValue
 }

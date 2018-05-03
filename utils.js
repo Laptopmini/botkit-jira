@@ -15,7 +15,7 @@ function encodeParameters(parameters, keys) {
 }
 
 function isEmailOfSamsungPartner(email) {
-    return false; // FIXME: Missing Implementation
+    return /@partner.samsung.com\s*$/.test(email);
 }
 
 async function getUserEmail(bot, slackId) {
