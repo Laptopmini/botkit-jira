@@ -28,10 +28,15 @@ function getUri() {
 
 async function getLedgerValue(slackEmail) {
     return new Promise((resolve, reject) => {
-        const db = monk(getUri());
-        const collection = db.get(table);
+        let db;
+        try {
+            db = monk(getUri());
+        } catch (error) {
+            reject(error);
+            return;
+        }
 
-        collection.findOne({
+        db.get(table).findOne({
             slack: slackEmail
         }).then((item) => {
             if (item === null) {
@@ -47,10 +52,15 @@ async function getLedgerValue(slackEmail) {
 
 async function addLedgerValue(slackEmail, jiraEmail) {
     return new Promise((resolve, reject) => {
-        const db = monk(getUri());
-        const collection = db.get(table);
-
-        collection.update({
+        let db;
+        try {
+            db = monk(getUri());
+        } catch (error) {
+            reject(error);
+            return;
+        }
+        
+        db.get(table).update({
             slack: slackEmail
         }, {
             slack: slackEmail,
