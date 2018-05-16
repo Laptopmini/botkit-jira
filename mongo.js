@@ -27,55 +27,29 @@ function getUri() {
 }
 
 async function getLedgerValue(slackEmail) {
-    return new Promise((resolve, reject) => {
-        let db;
-        try {
-            db = monk(getUri());
-        } catch (error) {
-            reject(error);
-            return;
-        }
-
-        db.get(table).findOne({
-            slack: slackEmail
-        }).then((item) => {
-            if (item === null) {
-                reject(new EmailNotInLedgerError());
-                return;
-            }
-            resolve(item.jira);
-        }).catch((error) => {
-            reject(error);
-        });
+    const db = monk(getUri());
+    const item = await db.get(table).findOne({
+        slack: slackEmail
     });
+    db.close();
+    if (item === null) {
+        throw new EmailNotInLedgerError();
+    }
+    return item.jira;
 }
 
 async function addLedgerValue(slackEmail, jiraEmail) {
-    return new Promise((resolve, reject) => {
-        let db;
-        try {
-            db = monk(getUri());
-        } catch (error) {
-            reject(error);
-            return;
-        }
-        
-        db.get(table).update({
-            slack: slackEmail
-        }, {
-            slack: slackEmail,
-            jira: jiraEmail
-        }, {
-            upsert: true,
-            w: 1
-        }).then((item) => {
-            resolve();
-        }).catch((error) => {
-            reject(error);
-        }).then(() => {
-            db.close();
-        });
-    })
+    const db = monk(getUri());
+    await db.get(table).update({
+        slack: slackEmail
+    }, {
+        slack: slackEmail,
+        jira: jiraEmail
+    }, {
+        upsert: true,
+        w: 1
+    });
+    db.close();
 }
 
 module.exports = {

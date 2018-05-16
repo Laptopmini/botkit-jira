@@ -9,48 +9,28 @@ const _accessCache = LRU({
 });
 
 async function isUserTeamMember(bot, slackUserId) {
-    return new Promise((resolve, reject) => {
-        if (slackUserId === undefined) {
-            resolve(false);
-            return;
-        }
-        const key = 'isUserTeamMember.' + slackUserId;
-        if (_accessCache.has(key)) {
-            resolve(_accessCache.get(key));
-            return;
-        }
-        
-        utils.getUserEmail(bot, slackUserId).then((email) => {
-            const completion = (email) => {
-                jira.getUser(email).then((user) => {
-                    jira.isUserTeamMember(user.name).then((result) => {
-                        _accessCache.set(key, result);
-                        resolve(result);
-                    }).catch((error) => {
-                        reject(error);
-                    })
-                }).catch((error) => {
-                    reject(error);
-                });
-            };
-
-            if (utils.isEmailOfSamsungPartner(email)) {
-                mongo.getLedgerValue(email).then((jiraEmail) => {
-                    completion(jiraEmail);
-                }).catch((error) => {
-                    if (error instanceof mongo.EmailNotInLedgerError) {
-                        completion(email);
-                        return;
-                    }
-                    reject(error);
-                });
-            } else {
-                completion(email);
+    if (slackUserId === undefined) return false;
+    const key = 'isUserTeamMember.' + slackUserId;
+    if (_accessCache.has(key)) return _accessCache.get(key);
+    const email = await utils.getUserEmail(bot, slackUserId);
+    const completion = async (email) => {
+        const user = await jira.getUser(email);
+        const result = await jira.isUserTeamMember(user.name);
+        _accessCache.set(key, result);
+        return result;
+    };
+    if (utils.isEmailOfSamsungPartner(email)) {
+        try {
+            const jiraEmail = await mongo.getLedgerValue(email);
+            return await completion(jiraEmail);
+        } catch (error) {
+            if (error instanceof mongo.EmailNotInLedgerError) {
+                return await completion(email);
             }
-        }).catch((error) => {
-            reject(error);
-        });
-    });
+            throw error;
+        }
+    }
+    return await completion(email);
 }
 
 async function addEmailToUserLedger(slackEmail, jiraEmail) {

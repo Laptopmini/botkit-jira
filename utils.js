@@ -18,7 +18,7 @@ function isEmailOfSamsungPartner(email) {
     return /@partner.samsung.com\s*$/.test(email);
 }
 
-async function getUserEmail(bot, slackId) {
+function getUserEmail(bot, slackId) {
     return new Promise((resolve, reject) => {
         bot.api.users.info({user: slackId}, (error, response) => {
             if (error) {
@@ -26,11 +26,11 @@ async function getUserEmail(bot, slackId) {
                 return;       
             }
             resolve(response.user.profile.email);
-        })
+        });
     });
 }
 
-async function get(path, parameters = undefined) {
+function get(path, parameters = undefined) {
     return new Promise((resolve, reject) => {
         if (process.env.JIRA_HOST === undefined) {
             reject(new Error("JIRA_HOST env variable is missing."));
@@ -38,7 +38,7 @@ async function get(path, parameters = undefined) {
         }
         var authHeaderValue;
         try {
-            authHeaderValue = getAuthorizationHeaderValue()
+            authHeaderValue = getAuthorizationHeaderValue();
         } catch (error) {
             reject(error);
             return;
@@ -67,7 +67,7 @@ async function get(path, parameters = undefined) {
                 resolve(data);
             }
         });
-    })
+    });
 }
 
 module.exports = {
