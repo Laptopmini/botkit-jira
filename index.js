@@ -14,8 +14,7 @@ async function isUserTeamMember(bot, slackUserId) {
     if (_accessCache.has(key)) return _accessCache.get(key);
     const email = await utils.getUserEmail(bot, slackUserId);
     const completion = async (email) => {
-        const user = await jira.getUser(email);
-        const result = await jira.isUserTeamMember(user.name);
+        const result = await jira.isUserTeamMember(email);
         _accessCache.set(key, result);
         return result;
     };

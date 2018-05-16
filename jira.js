@@ -20,10 +20,21 @@ async function getUser(key) {
     return response[0];
 }
 
-async function isUserTeamMember(username) {
+async function isUserTeamMember(email) {
+    let user;
+    try {
+        user = await getUser(email);
+    } catch (error) {
+        if (error instanceof UserNotFoundError) {
+            console.log(`notice: User with email "${email}" not found, access was denied.`);
+            return false;
+        }
+        throw error;
+    }
+
     const path = '/rest/api/2/user';
     const parameters = {
-        username: username,
+        username: user.name,
         expand: 'groups'
     }
     const response = await utils.get(path, parameters);
@@ -36,11 +47,11 @@ async function isUserTeamMember(username) {
             }
         }
     }
+    console.log(`notice: User "${user.name}" does not belong to target group, access was denied.`);
     return false;
 }
 
 module.exports = {
-    UserNotFoundError,
     getUser,
     isUserTeamMember
 }
