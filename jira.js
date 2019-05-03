@@ -43,10 +43,8 @@ async function isUserTeamMember(email) {
     expand: 'groups'
   };
   const response = await utils.get(path, parameters);
-  console.log('Got here');
   if (!!response.groups && !!response.groups.items) {
     const { items } = response.groups;
-    console.log('Got there:', JSON.stringify(items, null, 2));
     return !!items.find(item => item.name === process.env.JIRA_TEAM);
   }
   console.log(
