@@ -47,7 +47,7 @@ async function isUserTeamMember(email) {
     const groups = response.groups.items;
     for (var key in groups) {
       const name = groups[key].name;
-      if (name !== undefined && name == 'Team All') {
+      if (name !== undefined && name === process.env.JIRA_TEAM) {
         return true;
       }
     }
