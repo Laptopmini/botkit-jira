@@ -21,6 +21,9 @@ async function getUser(key) {
 }
 
 async function isUserTeamMember(email) {
+  if (!!!process.env.JIRA_TEAM) {
+    throw new Error('JIRA_TEAM env variable is missing.');
+  }
   let user;
   try {
     user = await getUser(email);

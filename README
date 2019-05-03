@@ -6,6 +6,7 @@ JIRA:
 JIRA_HOST=<jira_domain>
 JIRA_USER=<jira_user_email>
 JIRA_KEY=<jira_api_key>
+JIRA_TEAM=<team_name>
 
 MONGODB:
 JIRA_MONGO_DB=<mongo_db_name>
