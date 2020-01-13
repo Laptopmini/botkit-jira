@@ -1,6 +1,6 @@
 {
   "name": "botkit-jira",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A tiny framework to verify a Slack user against JIRA.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,6 @@
   "author": "Paul-Valentin Mini",
   "license": "Apache-2.0",
   "dependencies": {
-    "lru-cache": "^4.1.2",
-    "monk": "^6.0.5"
+    "lru-cache": "^4.1.2"
   }
 }

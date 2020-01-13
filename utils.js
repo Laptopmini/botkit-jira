@@ -16,10 +16,6 @@ function encodeParameters(parameters, keys) {
     .join('&');
 }
 
-function isEmailOfSamsungPartner(email) {
-  return /@partner.samsung.com\s*$/.test(email);
-}
-
 function getUserEmail(bot, slackId) {
   return new Promise((resolve, reject) => {
     bot.api.users.info({ user: slackId }, (error, response) => {
@@ -80,7 +76,6 @@ function get(path, parameters = undefined) {
 }
 
 module.exports = {
-  isEmailOfSamsungPartner,
   getUserEmail,
   get
 };
