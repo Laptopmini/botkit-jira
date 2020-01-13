@@ -31,6 +31,5 @@ function clearAccessCache(slackUserId = undefined) {
 
 module.exports = {
     isUserTeamMember,
-    addEmailToUserLedger,
     clearAccessCache
 }
