@@ -1,6 +1,6 @@
 {
   "name": "botkit-jira",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "A tiny framework to verify a Slack user against JIRA.",
   "main": "index.js",
@@ -12,7 +12,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "lru-cache": "^4.1.2",
-    "monk": "^7.1.2"
+    "monk": "^7.1.2",
+    "request": "^2.88.0"
   },
   "repository": {
     "type": "git",
