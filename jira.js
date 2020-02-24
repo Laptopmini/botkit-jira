@@ -39,7 +39,7 @@ async function isUserTeamMember(email) {
 
   const path = '/rest/api/2/user';
   const parameters = {
-    username: user.name,
+    accountId: user.accountId,
     expand: 'groups'
   };
   const response = await utils.get(path, parameters);
@@ -49,7 +49,7 @@ async function isUserTeamMember(email) {
   }
   console.log(
     `notice: User "${
-      user.name
+      user.displayName
     }" does not belong to target group, access was denied.`
   );
   return false;
